@@ -1,0 +1,19 @@
+---
+description: Padrões de implementação para arquivos do frontend administrativo
+globs: "src/**/*.{ts,tsx,css}"
+alwaysApply: false
+---
+
+# Implementação do frontend administrativo
+
+- Mantenha componentes de rota pequenos e componha funcionalidades em `features`.
+- Use TanStack Query para server state e mutações; invalide ou atualize caches de
+  forma explícita após operações administrativas.
+- Confirmações de ações destrutivas devem explicar o impacto e impedir submissão
+  duplicada, mas a API continua responsável pela autorização e idempotência.
+- Use Motion com moderação e respeite `prefers-reduced-motion`.
+- Garanta teclado, foco visível, labels, semântica, contraste e layout responsivo.
+- Não use `any`, não duplique regras de negócio da API e não trate valores
+  calculados no navegador como oficiais.
+- Teste permissões visuais, estados assíncronos, formulários e fluxos críticos.
+

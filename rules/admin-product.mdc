@@ -1,0 +1,31 @@
+---
+description: Escopo funcional, arquitetura e segurança do painel administrativo
+globs:
+alwaysApply: true
+---
+
+# Painel administrativo
+
+- O administrador deve consultar clientes, carteiras, patrimônio e perfis de
+  investidor, além de poder solicitar um novo teste de perfil.
+- O painel deve criar, editar, consultar e enviar recomendações de investimento
+  ou resgate.
+- O painel deve enviar e consultar boletos, documentos para assinatura e arquivos
+  para download.
+- O painel deve gerenciar administradores, dados pessoais, termos da plataforma
+  e solicitações de serviços extras, incluindo atribuição de responsável.
+- Toda ação administrativa sensível depende de autenticação e autorização na API
+  e deve produzir auditoria. A UI não é uma barreira de segurança.
+- Nunca registre tokens, CPF, saldos, documentos ou payloads sensíveis no browser.
+- Nunca armazene sessão em `localStorage` nem coloque segredos em `VITE_*`.
+- Quando o projeto for gerado, alinhe-o ao webapp do cliente: React, Vite,
+  TypeScript, Tailwind CSS v4, HeroUI, TanStack Router, TanStack Query e Motion.
+  Use versões atuais compatíveis com o workspace; não force React 18 se o cliente
+  já estiver em uma versão posterior.
+- Adote a mesma organização por `app`, `features`, `routes`, `shared` e `config`.
+  Features não importam diretamente umas das outras.
+- Use HeroUI como biblioteca principal e shadcn somente quando necessário.
+- Cubra loading, vazio, erro, sucesso e falta de permissão; garanta acessibilidade
+  e responsividade desde o primeiro componente.
+- Execute typecheck, lint, testes e build antes de concluir alterações.
+

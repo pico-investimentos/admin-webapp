@@ -5,6 +5,10 @@ node_modules/
 dist/
 build/
 coverage/
+.tanstack/
+
+# TypeScript
+*.tsbuildinfo
 
 # Local environment files
 .env

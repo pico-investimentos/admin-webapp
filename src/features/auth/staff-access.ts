@@ -1,8 +1,8 @@
-import type { SessionUser, StaffRole } from '@/features/auth/api/auth-api'
+import type { SessionUser, UserRole } from '@/features/auth/api/auth-api'
 
-const STAFF_ROLES: readonly StaffRole[] = ['assessor', 'admin']
+const STAFF_ROLES: readonly UserRole[] = ['assessor', 'admin']
 
-export function isStaffRole(role: StaffRole): boolean {
+export function isStaffRole(role: UserRole): boolean {
   return STAFF_ROLES.includes(role)
 }
 

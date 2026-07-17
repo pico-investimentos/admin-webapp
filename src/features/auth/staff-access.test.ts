@@ -4,7 +4,13 @@ import type { SessionUser } from '@/features/auth/api/auth-api'
 import { evaluateStaffAccess, isStaffRole } from '@/features/auth/staff-access'
 
 function userWithRole(role: SessionUser['role']): SessionUser {
-  return { id: '1', email: 'person@pico.test', hasCpf: false, role }
+  return {
+    id: '1',
+    email: 'person@pico.test',
+    hasCpf: false,
+    isActive: true,
+    role,
+  }
 }
 
 describe('isStaffRole', () => {

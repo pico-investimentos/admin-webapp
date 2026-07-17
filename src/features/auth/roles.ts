@@ -1,6 +1,6 @@
-import type { StaffRole } from '@/features/auth/api/auth-api'
+import type { UserRole } from '@/features/auth/api/auth-api'
 
-export const ROLE_LABELS: Record<StaffRole, string> = {
+export const ROLE_LABELS: Record<UserRole, string> = {
   admin: 'Administrador',
   assessor: 'Assessor',
   investor: 'Investidor',

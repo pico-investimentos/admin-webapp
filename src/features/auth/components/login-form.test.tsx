@@ -20,6 +20,7 @@ const adminUser: SessionUser = {
   id: '1',
   email: 'admin@pico.test',
   hasCpf: false,
+  isActive: true,
   role: 'admin',
 }
 
@@ -40,11 +41,11 @@ afterEach(() => {
 })
 
 describe('LoginForm', () => {
-  it('logs in and navigates to the panel on success', async () => {
+  it('logs in and navigates to the panel on success without refetching /me', async () => {
     vi.spyOn(authApi, 'login').mockResolvedValue({
-      data: { user: { id: '1', email: 'admin@pico.test', hasCpf: false } },
+      data: { user: adminUser },
     })
-    vi.spyOn(authApi, 'fetchCurrentUser').mockResolvedValue({ data: adminUser })
+    const fetchMe = vi.spyOn(authApi, 'fetchCurrentUser')
 
     const user = userEvent.setup()
     renderWithQuery(<LoginForm />)
@@ -57,6 +58,7 @@ describe('LoginForm', () => {
       expect(authApi.login).toHaveBeenCalledWith('admin@pico.test', 'password123')
       expect(navigateSpy).toHaveBeenCalledWith({ to: '/' })
     })
+    expect(fetchMe).not.toHaveBeenCalled()
   })
 
   it('shows the API error message on failure', async () => {

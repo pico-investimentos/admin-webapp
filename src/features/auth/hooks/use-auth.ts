@@ -21,12 +21,8 @@ export function useLogin() {
     mutationKey: ['auth', 'login'],
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       login(email, password),
-    onSuccess: async () => {
-      // Login does not return the role; refetch /me so the guard sees it.
-      await queryClient.fetchQuery({
-        queryKey: currentUserQueryKey,
-        queryFn: fetchSessionUser,
-      })
+    onSuccess: (result) => {
+      queryClient.setQueryData(currentUserQueryKey, result.data.user)
     },
   })
 }

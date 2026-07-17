@@ -5,7 +5,7 @@ import { Link, useRouterState } from '@tanstack/react-router'
 
 import { BrandMark } from '@/shared/components/brand-mark'
 
-type AppPath = '/'
+type AppPath = '/' | '/clients'
 
 type NavigationItem = {
   label: string
@@ -20,6 +20,7 @@ type AppShellProps = PropsWithChildren<{
 
 const navigationItems: NavigationItem[] = [
   { label: 'Visão geral', shortLabel: 'Início', to: '/', icon: House },
+  { label: 'Clientes', shortLabel: 'Clientes', to: '/clients', icon: Users },
 ]
 
 const CHROMELESS_PATHS = new Set<string>(['/login', '/forbidden'])
@@ -32,7 +33,10 @@ function AppNavigationLink({
   mobile?: boolean
 }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname })
-  const isActive = pathname === item.to
+  const isActive =
+    item.to === '/'
+      ? pathname === '/'
+      : pathname === item.to || pathname.startsWith(`${item.to}/`)
   const Icon = item.icon
 
   return (
@@ -81,16 +85,6 @@ export function AppShell({ children, headerAccessory }: AppShellProps) {
               <AppNavigationLink key={item.to} item={item} />
             ))}
           </nav>
-
-          <div className="mt-auto rounded-2xl bg-[var(--brand-surface)] p-4 shadow-[inset_0_0_0_1px_rgba(67,56,202,0.08)]">
-            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--brand-accent-strong)]">
-              <Users size={14} strokeWidth={2} aria-hidden="true" />
-              Em breve
-            </p>
-            <p className="mt-2 text-sm leading-5 text-slate-600">
-              A gestão de clientes chega nas próximas entregas do Painel.
-            </p>
-          </div>
         </aside>
 
         <main className="min-w-0 flex-1 px-4 pb-28 pt-7 sm:px-6 sm:pt-9 lg:px-8 lg:pb-12 xl:px-10">

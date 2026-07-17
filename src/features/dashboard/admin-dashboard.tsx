@@ -1,4 +1,5 @@
 import { Card, Chip } from '@heroui/react'
+import { Link } from '@tanstack/react-router'
 import { LayoutDashboard, Users } from 'lucide-react'
 import { motion } from 'motion/react'
 
@@ -6,9 +7,8 @@ import { useCurrentUser } from '@/features/auth/hooks/use-auth'
 import { ROLE_LABELS } from '@/features/auth/roles'
 
 const plannedItems = [
-  'Consulta de clientes com busca e filtros',
   'Cadastro de cliente com e-mail de boas-vindas',
-  'Detalhe do cliente e edição de dados',
+  'Edição de dados do cliente',
   'Gestão de assessores (somente administradores)',
 ]
 
@@ -51,10 +51,29 @@ export function AdminDashboard() {
         <Card.Header className="p-6 pb-0 sm:p-7 sm:pb-0">
           <Card.Title className="flex items-center gap-2 text-lg font-semibold tracking-[-0.02em]">
             <Users size={18} strokeWidth={1.9} aria-hidden="true" />
+            Clientes
+          </Card.Title>
+          <Card.Description className="mt-1 text-sm text-slate-500">
+            Consulte a base com busca, filtros e detalhe mascarado de CPF.
+          </Card.Description>
+        </Card.Header>
+        <Card.Content className="p-6 sm:p-7">
+          <Link
+            to="/clients"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[var(--brand-accent)] px-4 text-sm font-medium text-white outline-none ring-[var(--brand-focus)] focus-visible:ring-2"
+          >
+            Abrir consulta de clientes
+          </Link>
+        </Card.Content>
+      </Card>
+
+      <Card className="surface-card mt-5 rounded-[24px] bg-white p-0">
+        <Card.Header className="p-6 pb-0 sm:p-7 sm:pb-0">
+          <Card.Title className="text-lg font-semibold tracking-[-0.02em]">
             Próximas entregas
           </Card.Title>
           <Card.Description className="mt-1 text-sm text-slate-500">
-            A autenticação e o shell do Painel já estão prontos.
+            Cadastro, e-mail de boas-vindas e edição vêm a seguir.
           </Card.Description>
         </Card.Header>
         <Card.Content className="p-6 sm:p-7">

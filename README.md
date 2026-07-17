@@ -31,6 +31,8 @@ npm run dev
 O servidor de desenvolvimento sobe na porta **5174** (já incluída em
 `APP_ORIGINS` padrão da API). Para autenticar em desenvolvimento, use o seed de
 staff da API (`npm run db:seed-staff`): `admin@pico.test` / `assessor@pico.test`.
+Para popular clientes de teste na consulta, rode também `npm run db:seed-clients`
+na API (depois do seed de staff).
 
 ## Comandos
 
@@ -48,7 +50,7 @@ npm run preview    # prévia do build
 src/
 ├── app/          # providers, router e configuração global
 ├── config/       # variáveis de ambiente validadas
-├── features/     # módulos de negócio por funcionalidade (auth, dashboard)
+├── features/     # módulos de negócio por funcionalidade (auth, clients, dashboard)
 ├── routes/       # rotas do TanStack Router
 ├── shared/       # componentes, utilitários e infraestrutura reutilizável
 ├── styles/       # tema e estilos globais

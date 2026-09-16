@@ -27,16 +27,19 @@ function isSerializableBody(
   )
 }
 
+const DEFAULT_TIMEOUT_MS = 10_000
+
 export async function apiRequest<T>(
   path: string,
   options: ApiRequestOptions = {},
 ): Promise<T> {
-  const headers = new Headers(options.headers)
-  const body = isSerializableBody(options.body)
-    ? JSON.stringify(options.body)
-    : options.body
+  const { signal: callerSignal, ...restOptions } = options
+  const headers = new Headers(restOptions.headers)
+  const body = isSerializableBody(restOptions.body)
+    ? JSON.stringify(restOptions.body)
+    : restOptions.body
 
-  if (isSerializableBody(options.body) && !headers.has('Content-Type')) {
+  if (isSerializableBody(restOptions.body) && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
 
@@ -44,12 +47,32 @@ export async function apiRequest<T>(
     headers.set('Accept', 'application/json')
   }
 
-  const response = await fetch(`${env.apiUrl}/${path.replace(/^\//, '')}`, {
-    ...options,
-    body,
-    credentials: 'include',
-    headers,
-  })
+  const url = `${env.apiUrl}/${path.replace(/^\//, '')}`
+
+  let response: Response
+  try {
+    response = await fetch(url, {
+      ...restOptions,
+      body,
+      credentials: 'include',
+      headers,
+      signal: callerSignal ?? AbortSignal.timeout(DEFAULT_TIMEOUT_MS),
+    })
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'TimeoutError') {
+      throw new ApiError(
+        `A API não respondeu a tempo (${env.apiUrl}). Confira se a api/ está rodando.`,
+        0,
+        'NETWORK_TIMEOUT',
+      )
+    }
+
+    throw new ApiError(
+      `Não foi possível conectar à API em ${env.apiUrl}. Confira se ela está no ar.`,
+      0,
+      'NETWORK_ERROR',
+    )
+  }
 
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as {

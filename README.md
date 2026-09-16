@@ -28,16 +28,21 @@ npm install
 npm run dev
 ```
 
-O servidor de desenvolvimento sobe na porta **5174** (já incluída em
-`APP_ORIGINS` padrão da API). Para autenticar em desenvolvimento, use o seed de
-staff da API (`npm run db:seed-staff`): `admin@pico.test` / `assessor@pico.test`.
+O servidor de desenvolvimento sobe na porta **5175**. Deixe `VITE_API_URL` vazio
+no `.env`: o Vite encaminha `/api` para a API em `:3000`. Isso é necessário no
+WSL — o browser do Windows não alcança `localhost:3000` da distro Linux.
+
+Confirme o título da aba: **Painel Pico Investimentos** — se aparecer o app do
+investidor, a porta está apontando para o processo errado.
+Para autenticar em desenvolvimento, use o seed de staff da API
+(`npm run db:seed-staff`): `admin@pico.test` / `assessor@pico.test`.
 Para popular clientes de teste na consulta, rode também `npm run db:seed-clients`
 na API (depois do seed de staff).
 
 ## Comandos
 
 ```bash
-npm run dev        # servidor local (porta 5174)
+npm run dev        # servidor local (porta 5175)
 npm run build      # build de produção + typecheck
 npm run lint       # análise estática
 npm run test       # testes automatizados

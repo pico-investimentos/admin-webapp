@@ -19,9 +19,29 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5174,
+    // Bind on all interfaces so Windows browsers can reach the WSL Vite server.
+    // Port 5175 avoids clashes with Cursor/Windows sometimes holding 5174.
+    host: '0.0.0.0',
+    port: 5175,
+    strictPort: true,
+    // Browser on Windows cannot reliably reach WSL :3000 via localhost.
+    // Same-origin /api is forwarded from this process (inside WSL) to the API.
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
-    port: 5174,
+    host: '0.0.0.0',
+    port: 5175,
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+      },
+    },
   },
 })

@@ -1,7 +1,9 @@
-const DEFAULT_API_URL = 'http://localhost:3000'
+function parseApiUrl(value: string | undefined): string {
+  const candidate = value?.trim() ?? ''
 
-function parseUrl(value: string | undefined, fallback: string) {
-  const candidate = value?.trim() || fallback
+  if (!candidate) {
+    return ''
+  }
 
   try {
     return new URL(candidate).toString().replace(/\/$/, '')
@@ -11,5 +13,5 @@ function parseUrl(value: string | undefined, fallback: string) {
 }
 
 export const env = Object.freeze({
-  apiUrl: parseUrl(import.meta.env.VITE_API_URL, DEFAULT_API_URL),
+  apiUrl: parseApiUrl(import.meta.env.VITE_API_URL),
 })
